@@ -16,7 +16,7 @@
 * CMD + Shift + P = bring up Sublime's command palette
 * enter 'pack' and select 'Package Control: Install Packages'
 * Install Emmet, Sidebar Enhancements, Color Picker and Color Highlights.  Dont restart until all installed
-* Emmet: improves sublimes built-in text snippets, can use CSS selectors to create new html markup, i.e. ul#nav>li*4 then TAB will turn it into a <ul> with id="nav" and 4 <li>
+* Emmet: improves sublimes built-in text snippets, can use CSS selectors to create new html markup, i.e. ul#nav>li*4 then TAB will turn it into a `<ul>` with id="nav" and 4 `<li>` elements
 * SidebarEnhancements: extends functionality of Sublimes sidebar
 * Color Picker: CMD+Shift+C opens up color picker to quickly choose color
 * CMD + L or CMD + K to turn selected to lowercase
@@ -29,4 +29,6 @@
 * Grunt and Gulp are both popular, but Gulp uses javascript
 ##### Install Gulp
 * Make sure you already have node and npm `node --version` & `npm --version`
-*
+* `gulp --version` showed CLI 1.2.2 and local 3.9.1, ran `npm install --global gulp-cli` anyway
+* In this tutorials directory, run `npm init` to create a package.json file
+* again in this project directory, run `npm install --save-dev gulp` which installs gulp in devDependencies
