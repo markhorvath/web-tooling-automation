@@ -69,9 +69,66 @@ gulp.task('styles', function() {
 * add some css to the main.scss file, then run `gulp styles` in project directory and it should create a css file in the css folder
 * `npm install --save-dev gulp-prefixer`
 * add requirement and pipe to `gulpfile.js`
+```
+var autoprefixer = require('gulp-autoprefixer');
+    // since we already have a pipe coming from sass, we can simply add auotprefixer here
+        .pipe(autoprefixer({
+    // specify browser option which tells autoprefixer for which browsers to prefix
+            browsers: ['last 2 versions']
+        }))
+```
 * add the following to implement gulp-watch
 ```
 gulp.task('default', function() {
     gulp.watch('sass/**/*.scss', ['styles']);
 });
 ```
+### Lesson 4
+* `sudo npm install -g browser-sync`
+* add the following to `gulpfile.js`
+```
+var browserSync = require('browser-sync').create();
+browserSync.init({
+     server: "./"
+ });
+ browserSync.stream();
+ ```
+ * running `gulp` opens index.html in the browser, but doesn't seem to be automatically updating changes
+ * There was an error with autoprefixer so I had to comment that code out
+ * Linting is a way to automatically check for errors in 3 ways:
+    * your editor
+    * your build process
+    * pre-commit hook in version control
+* Theres also code style vs syntax linting
+* 3 popular JS linters:
+    * JSHint
+    * JSCS
+    * ESLint
+* To install ESLint: `sudo npm install -g eslint`, check version with `eslint -v`
+* Add SublimeLinter to Sublime plugin [link](http://www.sublimelinter.com/en/latest/) then restart Sublime
+* Back in terminal, `eslint --init`
+* Answer the prompts, I did 'Use a popular style guide', 'Standard', 'Javascript' at first then went back and followed the video's version
+* Add `var eslint = require('gulp-eslint');` to gulpfile
+* Copy following task from documentation [page](https://www.npmjs.com/package/gulp-eslint):
+```
+gulp.task('lint', () => {
+    // ESLint ignores files with "node_modules" paths.
+    // So, it's best to have gulp ignore the directory as well.
+    // Also, Be sure to return the stream from the task;
+    // Otherwise, the task may end before the stream has finished.
+    return gulp.src(['**/*.js','!node_modules/**'])
+        // eslint() attaches the lint output to the "eslint" property
+        // of the file object so it can be used by other modules.
+        .pipe(eslint())
+        // eslint.format() outputs the lint results to the console.
+        // Alternatively use eslint.formatEach() (see Docs).
+        .pipe(eslint.format())
+        // To have the process exit with an error code (1) on
+        // lint error, return the stream and pipe to failAfterError last.
+        .pipe(eslint.failAfterError());
+});
+```
+* add `'lint'` argument to the default task in the array after `'styles'`, then add `gulp.watch('js/**/*.js', ['lint']);` to the function
+* Was getting a "Cannot find gulp-eslint in node_modules error" so ran `npm install gulp-eslint`
+*
+*
