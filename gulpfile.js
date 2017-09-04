@@ -9,6 +9,8 @@ var sass = require('gulp-sass');
 var browserSync = require('browser-sync').create();
 var eslint = require('gulp-eslint');
 
+var jasmine = require('gulp-jasmine-phantom');
+
 /*Define default task*/
 gulp.task('default', ['styles', 'lint'], function() {
     gulp.watch('sass/**/*.scss', ['styles']);
@@ -41,7 +43,7 @@ gulp.task('styles', function() {
         .pipe(browserSync.stream());
 });
 
-gulp.task('lint', () => {
+gulp.task('lint', function() {
     // ESLint ignores files with "node_modules" paths.
     // So, it's best to have gulp ignore the directory as well.
     // Also, Be sure to return the stream from the task;
@@ -56,4 +58,12 @@ gulp.task('lint', () => {
         // To have the process exit with an error code (1) on
         // lint error, return the stream and pipe to failAfterError last.
         .pipe(eslint.failAfterError());
+});
+
+gulp.task('tests', function() {
+    gulp.src('tests/spec/extraSpec.js')
+        .pipe(jasmine({
+            integration: true,
+            vendor: 'js/**/*.js'
+        }));
 });

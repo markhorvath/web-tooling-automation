@@ -130,5 +130,20 @@ gulp.task('lint', () => {
 ```
 * add `'lint'` argument to the default task in the array after `'styles'`, then add `gulp.watch('js/**/*.js', ['lint']);` to the function
 * Was getting a "Cannot find gulp-eslint in node_modules error" so ran `npm install gulp-eslint`
-*
-*
+#### Unit Tests
+* `sudo npm install -g phantomjs`
+* `npm install --save-dev gulp-jasmine-phantom` in project directory
+* add `var jasmine = require('gulp-jasmine-phantom');` to gulpfile
+* add the following task to gulpfile:
+```
+gulp.task('test', function() {
+    gulp.src('tests/spec/extraSpec.js')
+        .pipe(jasmine({
+            integration: true,
+            vendor: 'js/**/*.js'
+        }));
+};
+```
+* run `gulp tests` and it should show a test about window height
+* FYI I had to install the tests directory with files from the udacity [repo](https://github.com/udacity/ud892/tree/master/Lesson%204) especially the lib/jasmine one since it was an old version
+
